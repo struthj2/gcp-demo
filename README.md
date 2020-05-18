@@ -20,7 +20,7 @@ The `src` folder contains a gradle/java8 sub-project to pull records from the My
     - First listing the Users
     - Then, filtering on Users with a favorite genre matching one selected from the API.
 
-The purpose of this demo was take a look at exising APIs NPR has availible, as well as imagine a use case that the CMS Storybook and Public Media Platform (PMP) replacement platform might use.
+The purpose of this demo was take a look at exising APIs NPR has availible, as well as imagine a use case that the CMS Story API and Public Media Platform (PMP) replacement platform might use.
 
 ### Running locally
 Run the build script to build the MySQL docker container, and then run the java8 app.
@@ -49,7 +49,7 @@ This was made as an explorative project before an interview. To acutally run an 
 #### Use of an ORM vs direct DB acess 
 ORMs can be a useful abstraction on top of RDBMS databases, however they can lead to [issues](https://martinfowler.com/bliki/OrmHate.html). Direct DB access can be more modular and simple in some cases, many things that can be done with an ORM can be done with a SQL query.
 
-#### Interaction with NPR One API vs StoryBook API
+#### Interaction with NPR One API vs Story API
 The NPR One API is well documented and seems to have ongoing support. In future iterations, if this was a sample app it could interact with the NPR One API or use the [javascript sdk](https://github.com/npr/npr-one-api-js-sdk).
 
 #### XML parser
@@ -80,6 +80,6 @@ spark-submit --jars gs://spark-lib/bigquery/spark-bigquery-latest.jar wordcount.
 - [BigQuery Spark connector](https://cloud.google.com/dataproc/docs/tutorials/bigquery-connector-spark-example)
 - [Hibernate ORM, HCL Intro](https://grokonez.com/hibernate/hibernate-query-language-hql-java-8-mysql)
 - [XML parse from oracle](https://docs.oracle.com/cd/B28359_01/appdev.111/b28394/adx_j_parser.htm#CCHBEGDD)
-
+- More [Hibernate](https://www.tutorialspoint.com/hibernate/hibernate_configuration.htm), [Hibernate, Streams 5.2](https://dzone.com/articles/streams-in-hibernate-and-beyond)
 
 
