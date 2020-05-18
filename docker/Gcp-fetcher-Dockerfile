@@ -1,0 +1,7 @@
+FROM openjdk:8-alpine
+COPY /staging/*.jar /etc/gcp-fetcher/
+
+WORKDIR /etc/gcp-fetcher
+RUN ls -ll
+RUN java -version
+# CMD ["java", "-jar", "./gcp-demo-all-1.0-SNAPSHOT.jar"]

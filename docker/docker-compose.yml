@@ -1,0 +1,19 @@
+version: '3'
+services:
+  mysql:
+    hostname: mysql-demo
+    build: 
+        context: .
+        dockerfile: MySQL-Dockerfile
+    ports:
+      - 3306:3306
+      - 33060:33060
+    environment:
+        MYSQL_ROOT_PASSWORD: supersecret
+  
+  gcp-fetcher:
+      build: 
+          context: .
+          dockerfile: Gcp-fetcher-Dockerfile
+      depends_on:
+          - mysql
