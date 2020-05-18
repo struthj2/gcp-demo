@@ -1,27 +1,59 @@
 # gcp-demo
-This repo is for the purpose of trying out GCP including google cloud SDK, BigQuery, and DataProc with Spark. It mostly contains [tutorial](#Awknowledgements) material from GCP as an introduction to the tools.
+### Prerequistes
+- [Google Cloud SDK (gsutil, bq, gcloud)](https://cloud.google.com/sdk/install)
+- [Docker](https://www.docker.com/products/docker-desktop)
+- JDK 1.8 
 
-_Additionally_ it contains an example of using streams with MySQL, and part of the NPR Storybook API. 
+## Background
+This repo is for the purpose of trying out GCP including google cloud SDK, BigQuery, and DataProc with Spark. It mostly contains [tutorial](#Awknowledgements) material from GCP as an introduction to the tools. This was created as exploritation of different tools in a tech stack.
 
-(Eventually, the goal is to write the combined dataset to GCP. Currently they are not connected).
+__Additionally__ it contains an example of using streams with MySQL, and part of the [NPR Story API](https://www.npr.org/api/inputReference.php). 
 
-The `gcp-fetcher` folder contains a gradle/java8 sub-project to pull records from the MySQL DB (using the mysql connector, and Hibernate ORM). A util class fetches genre data from the NPR API as XML. Then streams are used to perform simple operations.
+(Eventually, the goal is to write the combined dataset to GCP. Currently they are not connected, repo is still a _work in progress_).
+
+## Querying MySQL with ORM, Streams, and NPR API XML example
+
+The `src` folder contains a gradle/java8 sub-project to pull records from the MySQL DB (using the mysql connector, and Hibernate ORM). 
+- A util class fetches genre data from the NPR API as XML.
+- Then a dataset of Users is fetched from the DB using the ORM.
+- Streams are used to perform simple operations:
+    - First listing the Users
+    - Then, filtering on Users with a favorite genre matching one selected from the API.
 
 The purpose of this demo was take a look at exising APIs NPR has availible, as well as imagine a use case that the CMS Storybook and Public Media Platform (PMP) replacement platform might use.
 
+### Running locally
+Run the build script to build the MySQL docker container, and then run the java8 app.
+```
+./build.sh
+```
+or individually:
+1. Build the MySQL Docker container with: 
+```docker build ./docker/ -f ./docker/MySQL-Dockerfile -t mysql-demo```
+2. Then run the container in the background:   
+```docker run -d -p 3306:3306 -p 33060:33060 --name mysql-demo -e MYSQL_ROOT_PASSWORD=supersecret mysql-demo```
+3. Run to verify the container is healthy (wait for database/innodb to finish initializing can take around 30 sec):  
+```docker ps```
+    1. e.g look to see or similar:
+    ```
+    STATUS
+    Up About a minute (healthy)
+    ```
+
+4. Once the database container is up, run the java app:      
+```./gradlew clean build run```
 
 ### Improvements
+This was made as an explorative project before an interview. To acutally run an app or service like this a number of improvements could be made.
+
 #### Use of an ORM vs direct DB acess 
-ORMs are an excellent and useful abstraction on top of databases, however they can lead to issues. Direct DB access can be more modular and simple in some cases, many things that can be done with an ORM can be done with a SQL query.
+ORMs can be a useful abstraction on top of RDBMS databases, however they can lead to [issues](https://martinfowler.com/bliki/OrmHate.html). Direct DB access can be more modular and simple in some cases, many things that can be done with an ORM can be done with a SQL query.
 
 #### Interaction with NPR One API vs StoryBook API
 The NPR One API is well documented and seems to have ongoing support. In future iterations, if this was a sample app it could interact with the NPR One API or use the [javascript sdk](https://github.com/npr/npr-one-api-js-sdk).
 
-### XML parser
+#### XML parser
 There are many XML parsers availible, if using the legacy API. SAX, JacksonXML or others could be good refactors.
-
-### Prerequistes
-- [Google Cloud SDK (gsutil, bq, gcloud)](https://cloud.google.com/sdk/install)
 
 ## GCP Demo using Apache Spark and BigQuery.
 Define a bucket with: 

@@ -19,11 +19,15 @@ public class Main {
     static final String GENRE = "Rock";
 
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-
+        System.out.println("##################");
         System.out.println("Fetching Genres from API...\n");
+        System.out.println("##################");
+
         List<String> genres = parseXml();
 
+        System.out.println("##################");
         System.out.println("Running queries on Database...\n");
+        System.out.println("##################");
 
         Session session = HibernateConfig.getSessionFactory().openSession();
         if (session.isOpen()) {
@@ -34,19 +38,26 @@ public class Main {
         try {
             transaction = session.beginTransaction();
 
+            System.out.println("##################");
             System.out.println("From DB query, Stream users:");
+            System.out.println("##################");
+
             Stream<Users> stream1 = session.createQuery("select u from Users u").stream();
             stream1.map(users -> "Id: " + users.getId() + "\nName: " + users.getFirstName() + "\nFavorite genre:" + users.getFavoriteGenre())
                     .forEach(users -> { System.out.println(users); });
 
             String genreFromAPI = genres.get(genres.size() - 2);
 
-            System.out.printf("Searching for: " + genres.get(genres.size() - 2));
+            System.out.println("##################");
+            System.out.println("Searching for: " + genres.get(genres.size() - 2));
+            System.out.println("##################");
 
-            System.out.println("Using Stream filter users with favorite genre matching: " + genreFromAPI);
+            System.out.println("##################");
+            System.out.println("Using Stream, filter users with favorite genre matching: " + genreFromAPI);
+            System.out.println("##################");
             Stream<Users> streamFilter = session.createQuery("select u from Users u").stream();
             streamFilter.filter(users -> users.getFavoriteGenre().equals(genreFromAPI))
-                        .map(users -> "Id: " + users.getId() + "\nName: " + users.getFirstName() + "\nFavorite genre:" + users.getFavoriteGenre())
+                        .map(users -> "Id: " + users.getId() + "\nName: " + users.getFirstName() + "\nFavorite genre: " + users.getFavoriteGenre())
                         .forEach(users -> { System.out.println(users); });
 
             transaction.commit();

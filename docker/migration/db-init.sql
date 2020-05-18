@@ -40,7 +40,7 @@ Email  varchar(50),
 FavoriteGenre varchar(50)
 );
 
-INSERT INTO Users (FirstName, LastName, Department, Email, FavoriteGenre) VALUES ('Person', 'Personsen', 'IT', 'Person@mail.com', 'Rock');
+INSERT INTO Users (FirstName, LastName, Department, Email, FavoriteGenre) VALUES ('Pary', 'Peersen', 'IT', 'Person@mail.com', 'Rock');
 INSERT INTO Users (FirstName, LastName, Department, Email, FavoriteGenre) VALUES ('Amy', 'Smith', 'News Desk', 'a@mail.com', "Reagge");
 INSERT INTO Users (FirstName, LastName, Department, Email, FavoriteGenre) VALUES ('Jose', 'Johnson', 'Music', 'j@mail.com', "Country");
 INSERT INTO Users (FirstName, LastName, Department, Email, FavoriteGenre) VALUES ('Rob', 'Jerbarkle', 'Internal', 'jn@mail.com', "Pop");
