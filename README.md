@@ -32,9 +32,13 @@ Run the build script to build the MySQL docker container, and then run the java8
 ```
 or individually:
 1. Build and stage the the Java app with gradle:      
-```./gradlew clean fatJar prepareEnvironment```
+```
+./gradlew clean fatJar prepareEnvironment
+```
 2. Then start the docker stack: building the MySQL container, Java container and bringing up the environment:   
-```docker-compose -f ./docker/docker-compose.yml up --build```
+```
+docker-compose -f ./docker/docker-compose.yml up --build
+```
 3. The database will initialize by loading the init SQL script (InnoDB and startup will take a minute), then the Java container will check for the DB to be [healthy](https://docs.docker.com/compose/startup-order/) before starting the app.
 
 ### Improvements
