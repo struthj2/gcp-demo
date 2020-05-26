@@ -1,7 +1,15 @@
 FROM openjdk:8-alpine
 COPY /staging/*.jar /etc/gcp-fetcher/
+COPY /scripts /etc/gcp-fetcher/
 
 WORKDIR /etc/gcp-fetcher
-RUN ls -ll
+
+ENV WAIT_VERSION 2.7.2
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /etc/gcp-fetcher/
+RUN chmod +x ./wait
+
+RUN ls -la
 RUN java -version
+
 # CMD ["java", "-jar", "./gcp-demo-all-1.0-SNAPSHOT.jar"]
+CMD ["./mysql-check.sh"]

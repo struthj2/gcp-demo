@@ -4,9 +4,9 @@
 <session-factory>
     <property name="hibernate.enable_lazy_load_no_trans">true</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.password">supersecret</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/demo_db</property>
-    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">waitwaitdonttellme</property>
+    <property name="hibernate.connection.url">jdbc:mysql://mysql-demo:3306/demo_db</property>
+    <property name="hibernate.connection.username">usernameall</property>
     <property name="hibernate.dialect">org.hibernate.spatial.dialect.mysql.MySQLSpatialDialect</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <mapping class="Models.Users" />

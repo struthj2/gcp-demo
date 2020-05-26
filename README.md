@@ -2,6 +2,8 @@
 ### Prerequistes
 - [Google Cloud SDK (gsutil, bq, gcloud)](https://cloud.google.com/sdk/install)
 - [Docker](https://www.docker.com/products/docker-desktop)
+- [docker-compose](https://docs.docker.com/compose/install/#install-using-pip)
+    - ```pip install docker-compose```
 - JDK 1.8 
 
 ## Background
@@ -13,14 +15,15 @@ __Additionally__ it contains an example of using streams with MySQL, and part of
 
 ## Querying MySQL with ORM, Streams, and NPR API XML example
 
-The `src` folder contains a gradle/java8 sub-project to pull records from the MySQL DB (using the mysql connector, and Hibernate ORM). 
+The `src` folder contains a gradle/java8 sub-project to pull records from the MySQL DB (using the mysql connector, and Hibernate ORM) in a docker stack using compose.
+
 - A util class fetches genre data from the NPR API as XML.
 - Then a dataset of Users is fetched from the DB using the ORM.
 - Streams are used to perform simple operations:
     - First listing the Users
     - Then, filtering on Users with a favorite genre matching one selected from the API.
 
-The purpose of this demo was take a look at exising APIs NPR has availible, as well as imagine a use case that the CMS Storybook and Public Media Platform (PMP) replacement platform might use.
+The purpose of this demo was take a look at exising APIs NPR has availible, as well as imagine a use case that the CMS Story API and Public Media Platform (PMP) replacement platform might use.
 
 ### Running locally
 Run the build script to build the MySQL docker container, and then run the java8 app.
@@ -28,20 +31,11 @@ Run the build script to build the MySQL docker container, and then run the java8
 ./build.sh
 ```
 or individually:
-1. Build the MySQL Docker container with: 
-```docker build ./docker/ -f ./docker/MySQL-Dockerfile -t mysql-demo```
-2. Then run the container in the background:   
-```docker run -d -p 3306:3306 -p 33060:33060 --name mysql-demo -e MYSQL_ROOT_PASSWORD=supersecret mysql-demo```
-3. Run to verify the container is healthy (wait for database/innodb to finish initializing can take around 30 sec):  
-```docker ps```
-    1. e.g look to see or similar:
-    ```
-    STATUS
-    Up About a minute (healthy)
-    ```
-
-4. Once the database container is up, run the java app:      
-```./gradlew clean build run```
+1. Build and stage the the Java app with gradle:      
+```./gradlew clean fatJar prepareEnvironment```
+2. Then start the docker stack: building the MySQL container, Java container and bringing up the environment:   
+```docker-compose -f ./docker/docker-compose.yml up --build```
+3. The database will initialize by loading the init SQL script (InnoDB and startup will take a minute), then the Java container will check for the DB to be [healthy](https://docs.docker.com/compose/startup-order/) before starting the app.
 
 ### Improvements
 This was made as an explorative project before an interview. To acutally run an app or service like this a number of improvements could be made.
@@ -49,7 +43,7 @@ This was made as an explorative project before an interview. To acutally run an 
 #### Use of an ORM vs direct DB acess 
 ORMs can be a useful abstraction on top of RDBMS databases, however they can lead to [issues](https://martinfowler.com/bliki/OrmHate.html). Direct DB access can be more modular and simple in some cases, many things that can be done with an ORM can be done with a SQL query.
 
-#### Interaction with NPR One API vs StoryBook API
+#### Interaction with NPR One API vs Story API
 The NPR One API is well documented and seems to have ongoing support. In future iterations, if this was a sample app it could interact with the NPR One API or use the [javascript sdk](https://github.com/npr/npr-one-api-js-sdk).
 
 #### XML parser
@@ -80,6 +74,6 @@ spark-submit --jars gs://spark-lib/bigquery/spark-bigquery-latest.jar wordcount.
 - [BigQuery Spark connector](https://cloud.google.com/dataproc/docs/tutorials/bigquery-connector-spark-example)
 - [Hibernate ORM, HCL Intro](https://grokonez.com/hibernate/hibernate-query-language-hql-java-8-mysql)
 - [XML parse from oracle](https://docs.oracle.com/cd/B28359_01/appdev.111/b28394/adx_j_parser.htm#CCHBEGDD)
-
+- More [Hibernate](https://www.tutorialspoint.com/hibernate/hibernate_configuration.htm), [Hibernate, Streams 5.2](https://dzone.com/articles/streams-in-hibernate-and-beyond)
 
 

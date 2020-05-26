@@ -40,11 +40,15 @@ Email  varchar(50),
 FavoriteGenre varchar(50)
 );
 
-INSERT INTO Users (FirstName, LastName, Department, Email, FavoriteGenre) VALUES ('Pary', 'Peersen', 'IT', 'Person@mail.com', 'Rock');
+INSERT INTO Users (FirstName, LastName, Department, Email, FavoriteGenre) VALUES ('Parry', 'Peersen', 'IT', 'Person@mail.com', 'Rock');
 INSERT INTO Users (FirstName, LastName, Department, Email, FavoriteGenre) VALUES ('Amy', 'Smith', 'News Desk', 'a@mail.com', "Reagge");
 INSERT INTO Users (FirstName, LastName, Department, Email, FavoriteGenre) VALUES ('Jose', 'Johnson', 'Music', 'j@mail.com', "Country");
 INSERT INTO Users (FirstName, LastName, Department, Email, FavoriteGenre) VALUES ('Rob', 'Jerbarkle', 'Internal', 'jn@mail.com', "Pop");
 
-create user 'root'@'10.0.2.2' identified by 'supersecret';
-grant all privileges on *.* to 'root'@'10.0.2.2' with grant option;
-flush privileges;
+-- create user 'root'@'10.0.2.2' identified by 'waitwaitdonttellme';
+-- grant all privileges on *.* to 'root'@'10.0.2.2' with grant option;
+-- flush privileges;
+
+CREATE USER 'usernameall'@'%' IDENTIFIED BY 'waitwaitdonttellme';
+ grant all on *.* to 'usernameall'@'%';
+ flush privileges;

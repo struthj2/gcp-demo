@@ -47,5 +47,5 @@ task fatJar(type: Jar) {
 }
 
 task prepareEnvironment(){
-    dependsOn 'copyStaging'
+    dependsOn 'fatJar', 'copyStaging'
 }
