@@ -58,10 +58,10 @@ If this were a production app, it would be good to generalize the api client for
 
 #### Integration with brightspot CMS
 To integrate this project with [`brightspot-cms`](https://github.com/perfectsense/brightspot-cms) (the CMS to potentially be used in the NPR platform) a few things could be done in future iterations. 
-- Replace the Hibernate ORM, with [Dari](https://github.com/perfectsense/dari) the data modeling framework used in brightspot. 
-- Make the existing MySQL instance comptible with brightspot/Dari. Dari has it's own DDL (See the DDL [here](https://github.com/perfectsense/dari/blob/release/3.2/db/src/main/resources/mysql/schema-12.sql)) that is used to make database versions compatible across vendors, also loads table schemas. 
-- Update exiting models classes to use dari. Note that dari doesn't store like Hibernate/ORMs where a class is mapped to a table. Dari will store them in the `Record` table serializing the object as json and storing it in a blob.
-    - In this example project we would extend the `Content` class provided by brightspot to implement this.
+1. Replace the Hibernate ORM, with [Dari](https://github.com/perfectsense/dari) the data modeling framework used in brightspot. 
+2. Make the existing MySQL instance comptible with brightspot/Dari. Dari has it's own DDL (See the DDL [here](https://github.com/perfectsense/dari/blob/release/3.2/db/src/main/resources/mysql/schema-12.sql)) that is used to make database versions compatible across vendors, also loads table schemas. 
+3. Update exiting models classes to use dari. Note that dari doesn't store like Hibernate/ORMs where a class is mapped to a table. Dari will store them in the `Record` table serializing the object as json and storing it in a blob.
+    1. In this example project we would extend the `Content` class provided by brightspot to implement this.
 
 ## GCP Demo using Apache Spark and BigQuery.
 Define a bucket with: 
