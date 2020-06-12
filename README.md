@@ -56,7 +56,7 @@ There are many XML parsers availible, if using the legacy API. SAX, JacksonXML o
 #### API Client
 If this were a production app, it would be good to generalize the api client for multiple routes in the Story API. Also if pulling static content from that API, it could be useful to make and cache those requests, if the underlying data isn't subject to frequent change.
 
-#### Integration with brightspot CMS
+### Integration with brightspot CMS
 To integrate this project with [`brightspot-cms`](https://github.com/perfectsense/brightspot-cms) (the CMS to potentially be used in the NPR platform) a few things could be done in future iterations. 
 1. Replace the Hibernate ORM, with [Dari](https://github.com/perfectsense/dari) the data modeling framework used in brightspot. 
 2. Make the existing MySQL instance comptible with brightspot/Dari. Dari has it's own DDL (See the DDL [here](https://github.com/perfectsense/dari/blob/release/3.2/db/src/main/resources/mysql/schema-12.sql)) that is used to make database versions compatible across vendors, also loads table schemas. 
